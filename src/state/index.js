@@ -26,10 +26,12 @@ export const authSlice = createSlice({
       state.offers = action.payload.offers;
     },
     setOffer: (state, action) => {
-      const updatedOffers = state.offers.map((offer) => {
-        if (offer._id === action.payload.offer_id) return action.payload.offer;
+      state.offers = state.offers.map((offer) => {
+        if (offer._id === action.payload.offer_id) {
+          return action.payload.offer;
+        }
+        return offer; // Return the original offer if the ID doesn't match
       });
-      state.offers = updatedOffers;
     },
   },
 });

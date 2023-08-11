@@ -3,7 +3,7 @@ import Navbar from "../navbar";
 import { useSelector } from "react-redux";
 import UserWidget from "../widgets/UserWidget.jsx";
 import MyPostWidget from "../widgets/MyPostWidget.jsx";
-import OffersWidget from "../widgets/OffersWidget";
+import OffersWidget from "../widgets/OffersWidget.jsx";
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { _id, picturePath, role } = useSelector((state) => state.user);

@@ -1,7 +1,8 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 import { setOffers } from "../../state";
-import OfferWidget from "./OfferWidget";
+import OfferWidget from "./OfferWidget.jsx";
 
 const OffersWidget = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
@@ -9,37 +10,60 @@ const OffersWidget = ({ userId, isProfile = false }) => {
   const token = useSelector((state) => state.token);
 
   const getOffers = async () => {
-    const respone = await fetch(`http://localhost:3001/offer/`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = respone.json();
-    dispatch(setOffers({ offers: data }));
-  };
-
-  const getCompanyOffers = async () => {
-    const respone = await fetch(
-      `http://localhost:3001/users/${userId}/offers`,
-      {
+    try {
+      const response = await fetch("http://localhost:3001/offer/", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Type of data:", typeof data); // Log the type of data
+
+        dispatch(setOffers({ offers: data }));
+      } else {
+        console.error("Error fetching offers:", response.statusText);
       }
-    );
-    const data = await respone.json();
-    dispatch(setOffers({ offers: data }));
+    } catch (error) {
+      console.error("Error fetching offers:", error);
+    }
+  };
+
+  const getCompanyOffers = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/users/${userId}/offers`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Type of data:", typeof data); // Log the type of data
+
+        dispatch(setOffers({ offers: data }));
+      } else {
+        console.error("Error fetching company offers:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching company offers:", error);
+    }
   };
 
   useEffect(() => {
     if (isProfile) {
+      console.log("executed getCompanyOffers");
       getCompanyOffers();
     } else {
+      console.log("executed getOffers");
       getOffers();
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <>
       {offers.map(
