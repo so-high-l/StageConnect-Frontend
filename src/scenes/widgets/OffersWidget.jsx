@@ -43,8 +43,6 @@ const OffersWidget = ({ userId, isProfile = false }) => {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log("Type of data:", typeof data); // Log the type of data
-
         dispatch(setOffers({ offers: data }));
       } else {
         console.error("Error fetching company offers:", response.statusText);

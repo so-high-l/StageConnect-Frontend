@@ -28,6 +28,7 @@ import FlexBetween from "../../components/FlexBetween";
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -49,6 +50,11 @@ const Navbar = () => {
           fontSize="clamp(1rem, 2rem, 2.25rem)"
           color="primary"
           onClick={() => navigate("/home")}
+          sx={{
+            "&:hover": {
+              cursor: "pointer",
+            },
+          }}
         >
           StageConnect
         </Typography>
@@ -59,8 +65,12 @@ const Navbar = () => {
             gap="3rem"
             padding="0.1rem 1.5rem"
           >
-            <InputBase placeholder="Search..." />
-            <IconButton>
+            <InputBase
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <IconButton onClick={() => navigate(`/search/${searchQuery}`)}>
               <Search />
             </IconButton>
           </FlexBetween>
