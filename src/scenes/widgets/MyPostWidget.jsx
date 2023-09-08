@@ -118,7 +118,7 @@ const MyPostWidget = ({ picturePath }) => {
             placeholder="Offer description ..."
             onChange={(e) => setOfferDescription(e.target.value)}
             value={offerDescription}
-            minRows={6}
+            minRows={15}
             resize="none"
             style={{
               fontFamily: "Rubik",
@@ -173,8 +173,12 @@ const MyPostWidget = ({ picturePath }) => {
               sx={{ width: "100%" }}
             >
               <MenuItem value={"64cfb68fcb75452b68a843f7"}>Web dev</MenuItem>
-              <MenuItem value={"category2"}>Category 2</MenuItem>
-              <MenuItem value={"category3"}>Category 3</MenuItem>
+              <MenuItem value={"64fb4a12445c00ed1d858e30"}>
+                Big Data & Cloud computing
+              </MenuItem>
+              <MenuItem value={"64fb4a51445c00ed1d858e32"}>
+                Design UI/UX
+              </MenuItem>
               {/* Add more MenuItems for additional categories */}
             </Select>
           </FormControl>

@@ -25,6 +25,9 @@ const initialValues = {
   title: "",
   message: "",
   offer: "",
+  firstName: "",
+  lastName: "",
+  userPicturePath: "",
 };
 
 const ApplicationPage = () => {
@@ -37,6 +40,7 @@ const ApplicationPage = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const { palette } = useTheme();
   const [offer, setOffer] = useState(null);
+  const user = useSelector((state) => state.user);
 
   const fetchOffer = async () => {
     const response = await fetch(`http://localhost:3001/offer/${offerId}`, {
@@ -49,6 +53,10 @@ const ApplicationPage = () => {
 
   const handleApplication = async (values, onSubmitProps) => {
     values.offer = offerId;
+    values.firstName = user.firstName;
+    values.lastName = user.lastName;
+    values.userPicturePath = user.picturePath;
+
     const response = await fetch("http://localhost:3001/demande", {
       method: "POST",
       headers: {
@@ -59,7 +67,8 @@ const ApplicationPage = () => {
     });
     const data = await response.json();
     onSubmitProps.resetForm();
-    navigate("/home");
+    //change to my applications
+    navigate("/applications");
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {

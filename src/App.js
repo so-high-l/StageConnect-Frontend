@@ -9,11 +9,16 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 import ApplicationPage from "./scenes/applicationPage";
+import ApplicationsPage from "./scenes/applicationsPage";
+import OffersPage from "./scenes/offersPage";
+import RecievedApplicationsPage from "./scenes/recievedApplications";
 
 function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   const isAuth = Boolean(useSelector((state) => state.token));
+  // const isCompany = Boolean(useSelector((state) => state.user.role));
+
   return (
     <div className="app">
       <BrowserRouter>
@@ -36,6 +41,20 @@ function App() {
             <Route
               path="/apply/:offerId"
               element={isAuth ? <ApplicationPage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/offers"
+              element={isAuth ? <OffersPage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/applications"
+              element={isAuth ? <ApplicationsPage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/receivedApplications/:companyId"
+              element={
+                isAuth ? <RecievedApplicationsPage /> : <Navigate to="/" />
+              }
             />
           </Routes>
         </ThemeProvider>

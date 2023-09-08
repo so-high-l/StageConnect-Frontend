@@ -75,13 +75,19 @@ const OfferWidget = ({
         subtitle={location}
         userPicturePath={userPicturePath}
       />
-      <Typography color={main} sx={{ mt: "1rem" }}>
+      <Typography
+        color={"grey"}
+        sx={{ fontWeight: "300", fontSize: ".8rem", mt: "1rem" }}
+      >
+        - Internship offer -
+      </Typography>
+      <Typography color={primary} sx={{ mt: "1rem", fontSize: "1.3rem" }}>
         {title}
       </Typography>
       <Typography color={main} sx={{ mt: "1rem" }}>
         {description}
       </Typography>
-      <Typography color={primary} sx={{ mt: "1rem" }}>
+      <Typography color="#44bcff" sx={{ mt: "1rem" }}>
         From {formattedStartDate} to {formattedEndDate}
       </Typography>
       {picturePath && (

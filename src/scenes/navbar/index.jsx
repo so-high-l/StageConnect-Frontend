@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   IconButton,
@@ -9,18 +9,8 @@ import {
   FormControl,
   useTheme,
   useMediaQuery,
-  Icon,
 } from "@mui/material";
-import {
-  Search,
-  Message,
-  DarkMode,
-  LightMode,
-  Notifications,
-  Help,
-  Menu,
-  Close,
-} from "@mui/icons-material";
+import { Search, DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "../../state";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +19,7 @@ import FlexBetween from "../../components/FlexBetween";
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isCompany, setIsCompany] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -38,10 +29,13 @@ const Navbar = () => {
   const dark = theme.palette.neutral.dark;
   const background = theme.palette.background.default;
   const primaryLight = theme.palette.primary.light;
+  const primary = theme.palette.primary.main;
   const alt = theme.palette.background.alt;
   // TO CHANGE AFTER
   const fullName = `${user.firstName} ${user.lastName}`;
-
+  useEffect(() => {
+    user.role === "company" ? setIsCompany(true) : setIsCompany(false);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
@@ -87,9 +81,33 @@ const Navbar = () => {
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
           </IconButton>
-          <Message sx={{ fontSize: "25px" }} />
-          <Notifications sx={{ fontSize: "25px" }} />
-          <Help sx={{ fontSize: "25px" }} />
+          <Typography
+            onClick={() =>
+              isCompany ? navigate("/offers") : navigate("/applications")
+            }
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+                color: primary,
+              },
+            }}
+          >
+            {isCompany ? " My Offers" : " My Applications"}
+          </Typography>
+          {isCompany && (
+            <Typography
+              onClick={() => navigate(`/receivedApplications/${user._id}`)}
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                  color: primary,
+                },
+              }}
+            >
+              {" Recieved Applications"}
+            </Typography>
+          )}
+
           <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}
@@ -162,9 +180,32 @@ const Navbar = () => {
                 <LightMode sx={{ color: dark, fontSize: "25px" }} />
               )}
             </IconButton>
-            <Message sx={{ fontSize: "25px" }} />
-            <Notifications sx={{ fontSize: "25px" }} />
-            <Help sx={{ fontSize: "25px" }} />
+            <Typography
+              onClick={() =>
+                isCompany ? navigate("/offers") : navigate("/applications")
+              }
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                  color: primary,
+                },
+              }}
+            >
+              {isCompany ? " My Offers" : " My Applications"}
+            </Typography>
+            {isCompany && (
+              <Typography
+                onClick={() => navigate(`/receivedApplications/${user._id}`)}
+                sx={{
+                  "&:hover": {
+                    cursor: "pointer",
+                    color: primary,
+                  },
+                }}
+              >
+                {" Recieved Applications"}
+              </Typography>
+            )}
             <FormControl variant="standard" value={fullName}>
               <Select
                 value={fullName}

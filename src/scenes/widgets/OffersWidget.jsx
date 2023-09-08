@@ -19,7 +19,6 @@ const OffersWidget = ({ userId, isProfile = false }) => {
       });
       if (response.ok) {
         const data = await response.json();
-        console.log("Type of data:", typeof data); // Log the type of data
 
         dispatch(setOffers({ offers: data }));
       } else {
@@ -54,10 +53,8 @@ const OffersWidget = ({ userId, isProfile = false }) => {
 
   useEffect(() => {
     if (isProfile) {
-      console.log("executed getCompanyOffers");
       getCompanyOffers();
     } else {
-      console.log("executed getOffers");
       getOffers();
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
